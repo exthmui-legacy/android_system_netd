@@ -238,6 +238,7 @@ int FirewallController::setMACAddressRule(const char* mac, FirewallRule rule) {
 
     std::string command = Join(std::vector<std::string> {
         "*filter",
+        StringPrintf("%s fw_INPUT -m mac --mac-source %s -j DROP", op, mac),
         StringPrintf("%s fw_FORWARD -m mac --mac-source %s -j REJECT", op, mac),
         "COMMIT\n"
     }, "\n");
